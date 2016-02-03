@@ -1,5 +1,15 @@
 #!/bin/bash
 
+if [ ! -z $DOWNGRADE ]; then
+  echo Downgrading docker-engine to: $DOWNGRADE ...
+  apt-get remove -y docker-engine
+  apt-get autoremove
+  apt-get autoclean
+  apt-get install -y  docker-engine=${DOWNGRADE}~trusty
+  echo "The new docker version is: "
+  docker -v
+fi
+
 /opt/erlang_app/generate_release.sh
 
 name=$IMAGE_APP_NAME
